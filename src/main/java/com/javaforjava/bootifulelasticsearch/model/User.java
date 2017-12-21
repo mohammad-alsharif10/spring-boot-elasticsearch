@@ -1,4 +1,4 @@
-package pro.velikanov.bootifulelasticsearch.model;
+package com.javaforjava.bootifulelasticsearch.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;

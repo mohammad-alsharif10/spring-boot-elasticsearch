@@ -1,32 +1,33 @@
-package pro.velikanov.bootifulelasticsearch.controller;
+package com.javaforjava.bootifulelasticsearch.controller;
 
+import com.javaforjava.bootifulelasticsearch.dal.UserRepository;
+import com.javaforjava.bootifulelasticsearch.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pro.velikanov.bootifulelasticsearch.dal.UserRepository;
-import pro.velikanov.bootifulelasticsearch.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController("/user")
-public class UserController {
+@RestController
+public class UserDataController {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping
+    @RequestMapping("/all")
     public List<User> getAllUsers() {
         LOG.info("Getting all users. Total: {}", userRepository.count());
         List<User> target = new ArrayList<>();
+        //findAll returns an iterable, just converting it to a list for output
         userRepository.findAll().forEach(target::add);
         return target;
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    @RequestMapping("/id/{userId}")
     public User getUser(@PathVariable String userId) {
         LOG.info("Getting user with ID: {}", userId);
         User user = userRepository.findOne(userId);
@@ -34,7 +35,7 @@ public class UserController {
         return user;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
     public User addNewUsers(@RequestBody User user) {
         LOG.info("Adding user : {}", user);
         userRepository.save(user);
@@ -44,6 +45,7 @@ public class UserController {
 
     @RequestMapping(value = "/settings/{userId}", method = RequestMethod.GET)
     public Object getAllUserSettings(@PathVariable String userId) {
+
         User user = userRepository.findOne(userId);
         if (user != null) {
             return user.getUserSettings();

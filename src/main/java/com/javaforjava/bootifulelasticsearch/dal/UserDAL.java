@@ -1,6 +1,6 @@
-package pro.velikanov.bootifulelasticsearch.dal;
+package com.javaforjava.bootifulelasticsearch.dal;
 
-import pro.velikanov.bootifulelasticsearch.model.User;
+import com.javaforjava.bootifulelasticsearch.model.User;
 
 import java.util.List;
 
